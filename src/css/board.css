@@ -1,6 +1,5 @@
 .board {
-  /*display: table;*/
-  dipslay: block;
+  display: inline-block;
   margin: 20px 0px 20px 0px;
   border-spacing: 20px;
   text-align: center;

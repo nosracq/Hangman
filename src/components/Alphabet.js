@@ -9,7 +9,7 @@ class Alphabet extends Component {
 
   render() {
     return (
-      <div>
+      <div className="alphabet">
         {this.renderLetter('A')}
         {this.renderLetter('B')}
         {this.renderLetter('C')}

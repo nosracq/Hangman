@@ -3,18 +3,25 @@ import Dash from './Dash.js';
 
 class Board extends Component {
 
-  renderDash(char){
-    return <Dash value={char}/>;
+  constructor() {
+    super();
+    this.state = {
+      solution: 'Board'.split(''),
+    }
+  }
+  renderDash() {
+    return <Dash />
+  }
+
+  buildBoard() {
+    let spacesNeeded = this.state.solution;
+    return spacesNeeded.map(this.renderDash);
   }
 
   render() {
-    return(
-      <div>
-        {this.renderDash('B')}
-        {this.renderDash('O')}
-        {this.renderDash('A')}
-        {this.renderDash('R')}
-        {this.renderDash('D')}
+    return (
+      <div className="board">
+        {this.buildBoard()}
       </div>
     )
   }

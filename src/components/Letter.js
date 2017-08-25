@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 
 class Letter extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       disabled: false
     };
@@ -11,6 +11,9 @@ class Letter extends Component {
 
   handleClick() {
     this.setState( { disabled: !this.state.disabled});
+
+    /*TODO*/
+    /* check if the clicked letter is in the solution, and if so then update this.state.letter for the Dash component*/
   }
   render () {
     return (

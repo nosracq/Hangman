@@ -1,0 +1,13 @@
+.dash {
+  margin-right: 20px;
+  border-bottom: 3px solid #000;
+  width: 60px;
+  height: 60px;
+  font-size: 250%;
+  display: inline;
+  /*
+  display: table-cell;
+  vertical-align: bottom;
+  */
+
+}

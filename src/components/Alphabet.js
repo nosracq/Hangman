@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Letter from './Letter.js';
 
+
+//TODO:  this could just be a function since it has no state
 class Alphabet extends Component {
 
   renderLetter(char) {
-    return <Letter value={char}/>;
+    return <Letter evaluateGuess={this.props.evaluateGuess} value={char}/>;
   }
 
   render() {

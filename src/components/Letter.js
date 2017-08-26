@@ -2,18 +2,20 @@ import React, {Component} from 'react';
 
 class Letter extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       disabled: false
     };
   }
 
   handleClick() {
+    // disable the letter so it cannot be clicked again
     this.setState( { disabled: !this.state.disabled});
 
-    /*TODO*/
-    /* check if the clicked letter is in the solution, and if so then update this.state.letter for the Dash component*/
+    let guess = this.props.value;
+    // send the guessed letter to the parent to evaluate against the solution
+    this.props.evaluateGuess(guess);
   }
   render () {
     return (

@@ -1,29 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Dash extends Component {
-
-  constructor() {
+//class Dash extends Component {
+const Dash = (props) => {
+  /*constructor() {
     super();
     this.state = {
       letter: '',
     };
-  }
+  }*/
 
   // updates the letter of the current dash when a successful guess is made
-  componentWillReceiveProps(nextProps) {
+  /*componentWillReceiveProps(nextProps) {
     this.setState({
       letter: nextProps.value
     })
-  }
+  }*/
 
-  render() {
+  //render() {
     //TODO: need to remove border-bottom if the letter is a space
     return(
       <div className="dash">
-        {this.state.letter}
+        {props.value}
       </div>
     )
-  }
+  //}
 }
 
 export default Dash;

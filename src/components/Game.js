@@ -11,6 +11,7 @@ class Game extends Component {
     super();
     //TODO: need to keep track of number of spaces in solution, to compare
     //  woth the number of successful guesses when determining if the player has won
+
     this.state = {
       solution: 'PUZZLE'.split(''),
       //TODO: figure out how to allocate the same sized array as this.state.solution
@@ -21,27 +22,33 @@ class Game extends Component {
   }
   //TODO: need to check if the player has won or if the chances left are 0
 
-  //TODO: update guessesRemaining when a letter is clicked
-
   evaluateGuess = (letter) => {
     /*
         1. when a player clicks a letter, pass the value to the parent Game
-        2. Have the Game evaluate the guess to see if the letter occurs in the solution
-        3. If the letter is in the solution then update the state of the board
+        2. decrement the guessesRemaining counter
+        3. Have the Game evaluate the guess to see if the letter occurs in the solution
+        4. If the letter is in the solution then update the state of the board
             < Updating the state of the board will re-render the dash with the matching letter>
     */
     const progress = this.state.progress.slice();
     let i = this.state.solution.indexOf(letter, 0);
+    let found = false;
+    let remaining = 0;
 
     while(i >= 0) {
       progress[i] = letter;
       i = this.state.solution.indexOf(letter, i + 1);
+      found = true;
     }
+
+    remaining = found ? this.state.guessesRemaining : this.state.guessesRemaining - 1;
     this.setState({
       progress: progress,
-    });
+      guessesRemaining: remaining,
+    })
   }
   render() {
+    //let progress
     return(
       <div>
         <Intro />

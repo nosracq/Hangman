@@ -5,7 +5,7 @@ const Intro = () => {
   return(
     <div className="intro">
       <h1>Welcome to Hangman!</h1>
-      <h3>You get 8 guesses to complete the mystery word</h3>
+      <h3>You get 8 incorrect guesses to complete the mystery word</h3>
     </div>
   )
 }

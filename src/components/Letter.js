@@ -13,6 +13,7 @@ class Letter extends Component {
   }
   handleClick() {
     // disable the letter so it cannot be clicked again
+    if(this.props.gameOver) return;
     this.setState( { disabled: !this.state.disabled});
 
     let guess = this.props.value;

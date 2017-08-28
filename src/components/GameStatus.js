@@ -1,22 +1,21 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class GameStatus extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      guessesRemaining: this.props.guessesRemaining,
-    }
+// responsible for displaying the GameStatus depending on the state of the game
+const GameStatus = (props) => {
+  let display;
+
+  if (props.playerWon) {
+    display = <h2>You Won!</h2>;
   }
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      guessesRemaining: nextProps.guessesRemaining,
-    })
+  else if (props.guessesRemaining <= 0) {
+    display = <h2>Game Over! Try Again</h2>
   }
-  render() {
-    return (
-      <div><h2>GuessesRemaining: {this.state.guessesRemaining}</h2></div>
-    )
+  else {
+    display = <h2>GuessesRemaining: {props.guessesRemaining}</h2>
   }
+  return (
+    <div>{display}</div>
+  )
 }
 
 export default GameStatus;

@@ -6,7 +6,9 @@ import Letter from './Letter.js';
 class Alphabet extends Component {
 
   renderLetter(char) {
-    return <Letter evaluateGuess={this.props.evaluateGuess} value={char}/>;
+    return <Letter evaluateGuess={this.props.evaluateGuess}
+              gameOver={this.props.gameOver}
+              value={char}/>;
   }
 
   render() {

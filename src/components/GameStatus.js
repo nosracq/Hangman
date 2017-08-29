@@ -1,6 +1,9 @@
 import React from 'react';
 
-// responsible for displaying the GameStatus depending on the state of the game
+/*
+  The GameStatus component is responsible for displaying the GameStatus
+  depending on the state of the game
+*/
 const GameStatus = (props) => {
   let display;
 

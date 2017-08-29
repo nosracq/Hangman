@@ -1,29 +1,65 @@
-import React, { Component } from 'react';
-import Intro from './Intro.js';
-import GameStatus from './GameStatus.js';
-import Board from './Board.js';
-import Alphabet from './Alphabet.js';
+import React, { Component } from 'react'
+import Intro from './Intro.js'
+import GameStatus from './GameStatus.js'
+import Board from './Board.js'
+import Alphabet from './Alphabet.js'
+import Buttons from './Buttons.js'
+import apiConfig from '../config/.apiConfig';
+import $ from 'jquery'
 /*
   The Game component is responsible for managing the state of the game
 */
 class Game extends Component {
   constructor() {
     super();
-
+    // put the code for the api call here
+  //  this.getWord = this.getWord.bind(this);
     this.state = {
-      solution: 'PUZZLE'.split(''),
+      //solution: 'PUZZLE'.split(''),
+      solution: null,
       progress: [],
       playerWon: false,
       gameOver: false,
       guessesRemaining: 8,
     }
   }
-  //TODO: need to check if the player has won or if the chances left are 0
-  componentWillMount() {
-    this.setState({
-      progress: Array(this.state.solution.length).fill(null),
-    })
+
+  componentDidMount() {
+
+    const baseURL = 'https://wordsapiv1.p.mashape.com/words/';
+    const query = '?random=true';
+
+    // if i add redux then need to move this out of the component and into
+    // the async actions
+
+    const setState = this.setState.bind(this);
+    $.ajax({
+        url: baseURL + query,
+        type: 'GET',
+        dataType: 'json',
+        success: function (res) {
+          console.log("API call successful");
+          console.log("Word: " + res.word);
+          //solution = res.word.split('');
+          setState({
+            solution: res.word.toUpperCase().split(''),
+            progress: Array(res.word.length).fill(null),
+          });
+        },
+        error: function(err) {
+          console.log(err);
+        },
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader("X-Mashape-Authorization", apiConfig.key);
+        }
+      });
+    //console.log('Solution received: ' + solution);
+    /*this.setState({
+      solution: solution,
+      progress: Array(solution.length).fill(null),
+    })*/
    }
+
   checkForWinner() {
     let solution = this.state.solution.join('');
     let progress = this.state.progress.join('');
@@ -33,14 +69,9 @@ class Game extends Component {
       })
     }
   }
+
   evaluateGuess = (letter) => {
-    /*
-        1. when a player clicks a letter, pass the value to the parent Game
-        2. decrement the guessesRemaining counter
-        3. Have the Game evaluate the guess to see if the letter occurs in the solution
-        4. If the letter is in the solution then update the state of the board
-            < Updating the state of the board will re-render the dash with the matching letter>
-    */
+
     // get a shallow copy of the progress in state
     const progress = this.state.progress.slice();
     const solution = this.state.solution.slice();
@@ -68,8 +99,6 @@ class Game extends Component {
     })
   }
   render() {
-    console.log("Rendering Game...");
-    // Check if a player has won
     return(
       <div>
         <Intro />
@@ -86,6 +115,7 @@ class Game extends Component {
         <Alphabet
           evaluateGuess={this.evaluateGuess}
           gameOver={this.state.gameOver}/>
+        <Buttons />
       </div>
     )
   }

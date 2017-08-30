@@ -3,44 +3,59 @@ import Intro from './Intro.js'
 import GameStatus from './GameStatus.js'
 import Board from './Board.js'
 import Alphabet from './Alphabet.js'
-import Buttons from './Buttons.js'
+//import Buttons from './Buttons.js'
 import apiConfig from '../config/.apiConfig';
-import $ from 'jquery'
+//import $ from 'jquery'
 /*
   The Game component is responsible for managing the state of the game
 */
 class Game extends Component {
   constructor() {
     super();
-    // put the code for the api call here
-  //  this.getWord = this.getWord.bind(this);
     this.state = {
-      //solution: 'PUZZLE'.split(''),
-      solution: null,
-      progress: [],
+      solution: this.solution,
+      progress: this.progress,
       playerWon: false,
       gameOver: false,
       guessesRemaining: 8,
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
 
     const baseURL = 'https://wordsapiv1.p.mashape.com/words/';
     const query = '?random=true';
 
     // if i add redux then need to move this out of the component and into
     // the async actions
+    const setState = this.setState.bind(this);
 
+    let headers = new Headers({
+      'content-type': 'application/json',
+      'X-Mashape-Authorization' : apiConfig.key,
+    });
+    let request = new Request(baseURL + query, {
+      method: 'GET',
+      mode: 'cors',
+      headers: headers
+    });
+    fetch(request).then(function(res){
+      return res.json();
+    }).then(function(obj) {
+      console.log(obj);
+      setState({
+        solution: obj.word.toUpperCase().split(''),
+        progress: Array(obj.word.length).fill(null),
+      });
+    });
+
+/*
     const setState = this.setState.bind(this);
     $.ajax({
         url: baseURL + query,
         type: 'GET',
         dataType: 'json',
         success: function (res) {
-          console.log("API call successful");
-          console.log("Word: " + res.word);
-          //solution = res.word.split('');
           setState({
             solution: res.word.toUpperCase().split(''),
             progress: Array(res.word.length).fill(null),
@@ -52,12 +67,8 @@ class Game extends Component {
         beforeSend: function(xhr) {
           xhr.setRequestHeader("X-Mashape-Authorization", apiConfig.key);
         }
-      });
-    //console.log('Solution received: ' + solution);
-    /*this.setState({
-      solution: solution,
-      progress: Array(solution.length).fill(null),
-    })*/
+      });*/
+
    }
 
   checkForWinner() {
@@ -115,7 +126,7 @@ class Game extends Component {
         <Alphabet
           evaluateGuess={this.evaluateGuess}
           gameOver={this.state.gameOver}/>
-        <Buttons />
+        {/*<Buttons />*/}
       </div>
     )
   }
